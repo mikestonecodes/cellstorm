@@ -4,9 +4,10 @@ precision highp float;
 #define PI 3.1415926538
 
 uniform float uTime;
+
+
 in vec2 vUv;
 out vec4 color;
-
 #pragma glslify: palette = require('./palette.glsl')
 
 vec2 rotateUV(vec2 uv, float rotation, vec2 mid)
@@ -21,9 +22,7 @@ vec2 rotateUV(vec2 uv, float rotation, vec2 mid)
 
 vec3 drawTiles(float tiles,float size, vec2 pos,float angle,vec2 uv){
 
-    float tileSize = (size / tiles );
-
-    uv = rotateUV(uv,angle,pos);
+    if(angle != 0. ) uv = rotateUV(uv,angle,pos);
    
     pos -= size/2.;
 
@@ -41,6 +40,6 @@ vec3 drawTiles(float tiles,float size, vec2 pos,float angle,vec2 uv){
 }
 
 void main() {
-    color.rgb = drawTiles(8.,0.25,vec2(0.24,0.45),0.5,vUv);
+    color.rgb = drawTiles(4.,0.2,vec2(0.5,0.45),0.7,vUv);
     color.a = 1.0;
 }
