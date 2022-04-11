@@ -4,9 +4,8 @@ precision highp float;
 #define PI 3.1415926538
 
 uniform float uTime;
+flat in int vid;
 
-
-in vec2 vUv;
 out vec4 color;
 #pragma glslify: palette = require('./palette.glsl')
 
@@ -20,26 +19,21 @@ vec2 rotateUV(vec2 uv, float rotation, vec2 mid)
     );
 }
 
-vec3 drawTiles(float tiles,float size, vec2 pos,float angle,vec2 uv){
-
-    if(angle != 0. ) uv = rotateUV(uv,angle,pos);
-   
-    pos -= size/2.;
-
-    if( uv.x  < pos.x )return vec3(0.);
-    if( uv.x  > size + pos.x )return vec3(0.);
-
-    if( uv.y <   pos.y )return vec3(0.);
-    if( uv.y > size + pos.y )return vec3(0.);
-
-    vec2 offset = (size - pos) ; 
-
+void drawTiles(float tiles,float size){
+    vec2 uv = rotateUV(gl_PointCoord.xy ,float(vid)*0.3,vec2(0.5));
+    uv/=0.5;
+    uv-=0.5;
+    vec2 offset = vec2(size ) ; 
     ivec2 tilePos = ivec2( (uv + offset) / size * tiles );
-
-    return color.rgb = palette[(tilePos.x % 4) + (tilePos.y % 4)];
+     if(uv.x < 0. || uv.x > 0. + size || uv.y < 0. || uv.y > 0. + size) {
+         return;
+    }
+    color=  vec4(palette[(tilePos.x % 4) + (tilePos.y % 4)],1.0);
 }
+
 
 void main() {
-    color.rgb = drawTiles(4.,0.2,vec2(0.5,0.45),0.7,vUv);
-    color.a = 1.0;
+    color=vec4(0.0);
+    drawTiles(6.,1.0);
 }
+

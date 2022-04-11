@@ -1,11 +1,14 @@
 #version 300 es
 
-in vec2 uv;
-in vec2 position;
-uniform float aspectRatio;
-out vec2 vUv;
-
+in float uTime;
+flat out int vid;
 void main() {
-    vUv = vec2(mix(0.5, uv.x, aspectRatio),uv.y);
-    gl_Position = vec4(position, 0, 1);
+  float u = float(gl_VertexID) / 4000.;  // goes from 0 to
+  vid = gl_VertexID;
+  float size = float(vid)*10. ;
+  float x = u*size;                   // random position
+  float y =u*size;          // 1.0 ->  -1.0
+
+  gl_Position = vec4(x, y, 0, 1);
+  gl_PointSize = size;
 }
