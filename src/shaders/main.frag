@@ -23,13 +23,19 @@ vec2 rotateUV(vec2 uv, float rotation, vec2 mid)
 }
 
 void drawTiles(float tiles,float size){
-    vec2 uv = rotateUV(gl_PointCoord.xy ,rotation + PI,vec2(0.5) );
+    vec2    uv = gl_PointCoord.xy;
+
+     uv = rotateUV(uv , 0.,vec2(0.5) ) ;
+    uv.y = 1.0 - uv.y;
+
+
     uv/=0.5;
     uv-=0.5;
-    vec2 offset = vec2(size ) ; 
-    vec2 tilePos = vec2( (uv + offset) / size * tiles );
-     int indx = int(texture(u_image, uv).a * 255.0);
-     if(uv.x < 0. || uv.x > 0. + size || uv.y < 0. || uv.y > 0. + size || indx == 0) {
+    
+
+    uv.x = (uv.x) ;
+     int indx = int(texture(u_image, uv).a * 255.0) ;
+     if(uv.x < 0. || uv.x > 0. + size || uv.y < 0. || uv.y > 0. + size) {
          discard;
     }
    
@@ -39,6 +45,6 @@ void drawTiles(float tiles,float size){
 
 void main() {
     color=vec4(0.0);
-    drawTiles(8.,1.0);
+    drawTiles(16.,1.0);
 }
 

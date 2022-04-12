@@ -2,10 +2,10 @@
   "devDependencies": {
     "@parcel/transformer-glsl": "^2.0.1",
     "eslint": "^8.5.0",
-    "eslint-plugin-purecheck": "github:lcrespom/eslint-plugin-purecheck",
-    "parcel": "^2.0.1",
     "eslint-plugin-immutable": "^1.0.0",
-    "eslint-plugin-pure": "purely-functional/eslint-plugin-pure"
+    "eslint-plugin-pure": "purely-functional/eslint-plugin-pure",
+    "eslint-plugin-purecheck": "github:lcrespom/eslint-plugin-purecheck",
+    "parcel": "^2.0.1"
   },
   "scripts": {
     "build": "parcel build index.html",
@@ -16,6 +16,7 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "dependencies": {
     "bitecs": "^0.3.34",
-    "ogl": "^0.0.78"
+    "ogl": "^0.0.78",
+    "potpack": "^1.0.2"
   }
 }
