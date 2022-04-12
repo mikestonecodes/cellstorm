@@ -229,14 +229,14 @@ const images = [ {
 
 ]
 
-
 const {w:width,h:height} =potpack(images);
 
 const c = new Uint8Array(width*height);
 
     for(const image of images){
+        console.log(image);
        for (let y = 0; y < image.h ; y++) {
-            for (let x = 0; x < image.w ; x++) {
+            for (let x = 0; x < image.w ; x++) { 
                         c[x+(y+image.y)*width+image.x] = image.data[x+y*image.w];        
             }
         } 
@@ -253,6 +253,8 @@ const program = new Program(gl, {
         uTime,   
         zoom,
         pan,
+        width:{value   :width},
+        height:{value  :height},
         u_image: { value: tex },
     },
     transparent: true,
