@@ -4,7 +4,10 @@ precision highp float;
 #define PI 3.1415926538
 
 uniform float uTime;
+uniform sampler2D u_image;
+
 flat in int vid;
+flat in float rotation;
 
 out vec4 color;
 #pragma glslify: palette = require('./palette.glsl')
@@ -20,20 +23,22 @@ vec2 rotateUV(vec2 uv, float rotation, vec2 mid)
 }
 
 void drawTiles(float tiles,float size){
-    vec2 uv = rotateUV(gl_PointCoord.xy ,float(vid)*0.3,vec2(0.5));
+    vec2 uv = rotateUV(gl_PointCoord.xy ,rotation + PI,vec2(0.5) );
     uv/=0.5;
     uv-=0.5;
     vec2 offset = vec2(size ) ; 
-    ivec2 tilePos = ivec2( (uv + offset) / size * tiles );
-     if(uv.x < 0. || uv.x > 0. + size || uv.y < 0. || uv.y > 0. + size) {
-         return;
+    vec2 tilePos = vec2( (uv + offset) / size * tiles );
+     int indx = int(texture(u_image, uv).a * 255.0);
+     if(uv.x < 0. || uv.x > 0. + size || uv.y < 0. || uv.y > 0. + size || indx == 0) {
+         discard;
     }
-    color=  vec4(palette[(tilePos.x % 4) + (tilePos.y % 4)],1.0);
+   
+    color=  vec4(palette[indx],1.0);
 }
 
 
 void main() {
     color=vec4(0.0);
-    drawTiles(6.,1.0);
+    drawTiles(8.,1.0);
 }
 
