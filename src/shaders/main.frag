@@ -5,6 +5,7 @@ precision highp float;
 
 uniform float uTime;
 uniform sampler2DArray u_image;
+uniform sampler2D u_imagetest;
 uniform int width;
 uniform int height;
 
@@ -14,8 +15,9 @@ flat in float rotation;
 out vec4 color;
 #pragma glslify: palette = require('./palette.glsl')
 
-vec2 rotateUV(vec2 uv, float rotation, vec2 mid)
+vec2 rotateUV(vec2 uv, float rotation )
 {
+    vec2 mid = vec2(0.5);
     float cosAngle = cos(rotation);
     float sinAngle = sin(rotation);
     return vec2(
@@ -26,19 +28,20 @@ vec2 rotateUV(vec2 uv, float rotation, vec2 mid)
 
 void drawTiles(){
     vec2    uv = gl_PointCoord.xy; 
-    uv = rotateUV(uv , rotation,vec2(0.5) ) ;
+    uv = rotateUV(uv , rotation ) ;
     uv/=0.5;
     uv-=0.5;
-
-    if(uv.x < 0. || uv.x > 0. + 0.99999 || uv.y < 0. || uv.y > 0. + 0.99999) {
+    color = vec4(0.5);
+    if(uv.x < 0. || uv.x > 0. + 1.|| uv.y < 0. || uv.y > 0. + 1.) {
          discard;
          return;
     }
 
+
     vec2 spriteSize = vec2(32.,32.);
     
-    float spnum =float(vid);
-  
+    float spnum = float(vid % 8000);
+    //if(vid % 16 == 0 ) spnum = float(vid);
 
     float dx = spriteSize.x / float(width);
     float dy = spriteSize.y / float(height);
@@ -50,7 +53,9 @@ void drawTiles(){
     float col = mod(index, cols);
     float row = floor(index / cols);
     uv = vec2(dx * uv.x + (col/cols) ,   dy * uv.y + (row/cols) );
-    int indx = int(texture(u_image, vec3(uv,floor(spnum/(cols*cols)))).a * 255.0) ;
+    int currentLayer = int(floor(spnum / (cols*cols)));
+    vec3 currentPos = vec3(uv, float(currentLayer));
+    int indx = int(texture(u_image, currentPos).a * 255.0) ;
     if(indx == 0 )discard;
     color=  vec4(palette[indx],1.0);
 }

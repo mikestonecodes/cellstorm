@@ -2419,6 +2419,11 @@
   "resolved" "https://registry.npmjs.org/format/-/format-0.2.2.tgz"
   "version" "0.2.2"
 
+"fps-m@^1.1.2":
+  "integrity" "sha512-AYzVp3zUT5W7nbPtv/f4xbA4K2inS8sDXJEqDxZD1QIPw53k2eM3SaghYr1xwoGY5L/3OyPP4cuFdDESL+P6Fg=="
+  "resolved" "https://registry.npmjs.org/fps-m/-/fps-m-1.1.2.tgz"
+  "version" "1.1.2"
+
 "fs.realpath@^1.0.0":
   "integrity" "sha1-FQStJSMVjKpA20onh8sBQRmU6k8="
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
@@ -4794,6 +4799,11 @@
   "integrity" "sha512-ji9qxRnOVfcuLDySj9qzhGSEFVobyt1kIOSkj1qZzYLzq7Tos/oUUWvotUPQLlrsidqsK6tBH89Bc9kL5zHA6w=="
   "resolved" "https://registry.npmjs.org/stable/-/stable-0.1.8.tgz"
   "version" "0.1.8"
+
+"stats.js@^0.17.0":
+  "integrity" "sha1-scPcRtlEmLV4t/05hbgaznExzH0="
+  "resolved" "https://registry.npmjs.org/stats.js/-/stats.js-0.17.0.tgz"
+  "version" "0.17.0"
 
 "statuses@~1.5.0":
   "integrity" "sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow="

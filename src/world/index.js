@@ -10,7 +10,7 @@ export const scene = new Transform()
 
 import vertex from "../shaders/main.vert"
 import fragment from "../shaders/main.frag"
-
+import Stats from "stats.js"
 
 const gl = renderer.gl
 document.body.appendChild(gl.canvas)
@@ -27,11 +27,15 @@ function resize() {
 resize()
 window.addEventListener('resize', resize, false)
 
+var stats = new Stats();
+stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild( stats.dom );
 
 
 const images = [ 
     
     {
+
         wa:11,
         data:new Uint8Array([
         0,0,1,1,1,1,0,0,0,1,1,
@@ -56,7 +60,7 @@ const images = [
     
     },
     {
-   
+    
     wa:8,
     data:new Uint8Array([
     0,0,1,1,1,1,0,0,
@@ -72,15 +76,12 @@ const images = [
 }]
 
 
-for (let i = 0; i < 30000; i++) {
+for (let i = 0; i < 10000; i++) {
     images.push({
         wa:32,
-        data:new Uint8Array(32 * 32).fill(0).map((a,ind) =>Math.floor(Math.random() *7 ))
+       
+        data:new Uint8Array(32 * 32).fill(0).map(() =>Math.floor(Math.random() *7 ))
     })
-}
-
-for(const image of images){
-    image.w = image.h = 32;
 }
 
 
@@ -89,8 +90,6 @@ const height = width;
 
 const cols = Math.floor(width / 32);
 const layers = Math.ceil(images.length / (cols*cols) );
-console.log(cols,layers,width,images.length / (cols*cols));
-
 
 const c = new Uint8Array((width*height) * layers );
    let indx = 0;
@@ -108,8 +107,9 @@ const c = new Uint8Array((width*height) * layers );
 
   
 
-const tex = new Texture3D(gl,{target:gl.TEXTURE_2D_ARRAY,image:c,generateMipmaps:false,format:gl.ALPHA,type:gl.UNSIGNED_BYTE,width:width,layers,magFilter:gl.NEAREST,minFilter:gl.NEAREST})
-const numVertices = 100000;
+const tex3D = new Texture3D(gl,{target:gl.TEXTURE_2D_ARRAY,image:c,generateMipmaps:false,format:gl.ALPHA,type:gl.UNSIGNED_BYTE,width:width,layers,magFilter:gl.NEAREST,minFilter:gl.NEAREST})
+
+const numVertices = 50000;
 const program = new Program(gl, {
     vertex,
     fragment,
@@ -119,7 +119,8 @@ const program = new Program(gl, {
         pan,
         width:{value   :width},
         height:{value  :height},
-        u_image: { value: tex },
+     
+        u_image: { value: tex3D },
         numVerts:{value:numVertices}
     },
     transparent: true,
@@ -133,9 +134,15 @@ if(!gl.getProgramParameter(program.program, gl.LINK_STATUS)){
 requestAnimationFrame(update)
 
 function update() {
-    requestAnimationFrame(update);
+
+    
+    stats.begin();
+
     uTime.value += 0.01;
     program.use();
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     gl.drawArrays(gl.POINTS, 0, numVertices);
+    stats.end();
+
+    requestAnimationFrame(update);
 }

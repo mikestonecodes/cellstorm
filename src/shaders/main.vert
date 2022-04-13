@@ -15,7 +15,7 @@ float hash(float p) {
 void main() {
   float u = float(gl_VertexID) / float(numVerts);
   vid = gl_VertexID;
-  float size =  14.+(sin(uTime  ) * 70.0);
+  float size =  13. +(sin(uTime  ) * 10.0);
     float off = floor(uTime + u) / 1000.0;            // changes once per second per vertex
 
   float x = hash(u + off) * 2.0 - 1.0;             // random position
