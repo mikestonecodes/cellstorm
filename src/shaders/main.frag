@@ -37,7 +37,7 @@ void drawTiles(){
 
     vec2 spriteSize = vec2(32.,32.);
     
-    float spnum =uTime*2.;
+    float spnum =float(vid);
   
 
     float dx = spriteSize.x / float(width);
@@ -51,6 +51,7 @@ void drawTiles(){
     float row = floor(index / cols);
     uv = vec2(dx * uv.x + (col/cols) ,   dy * uv.y + (row/cols) );
     int indx = int(texture(u_image, vec3(uv,floor(spnum/(cols*cols)))).a * 255.0) ;
+    if(indx == 0 )discard;
     color=  vec4(palette[indx],1.0);
 }
 

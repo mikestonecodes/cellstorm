@@ -72,19 +72,16 @@ const images = [
 }]
 
 
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 30000; i++) {
     images.push({
         wa:32,
-        data:new Uint8Array(32 * 32).fill(0).map((a,ind) =>(ind) == (i%(32*32))  ? 0 : 1)
+        data:new Uint8Array(32 * 32).fill(0).map((a,ind) =>Math.floor(Math.random() *7 ))
     })
 }
 
 for(const image of images){
     image.w = image.h = 32;
 }
-
-//const {w:width,h:height} =potpack(images);
-//console.log(width,height , Math.sqrt(images.length) * 32);
 
 
 const width =   1024 ;
@@ -112,7 +109,7 @@ const c = new Uint8Array((width*height) * layers );
   
 
 const tex = new Texture3D(gl,{target:gl.TEXTURE_2D_ARRAY,image:c,generateMipmaps:false,format:gl.ALPHA,type:gl.UNSIGNED_BYTE,width:width,layers,magFilter:gl.NEAREST,minFilter:gl.NEAREST})
-
+const numVertices = 100000;
 const program = new Program(gl, {
     vertex,
     fragment,
@@ -123,6 +120,7 @@ const program = new Program(gl, {
         width:{value   :width},
         height:{value  :height},
         u_image: { value: tex },
+        numVerts:{value:numVertices}
     },
     transparent: true,
     depthTest: false
@@ -139,5 +137,5 @@ function update() {
     uTime.value += 0.01;
     program.use();
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-    gl.drawArrays(gl.POINTS, 0, 10);
+    gl.drawArrays(gl.POINTS, 0, numVertices);
 }
