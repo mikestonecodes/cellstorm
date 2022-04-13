@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "parcel build index.html",
-    "build-github": "rm -rf docs/* && parcel build index.html --public-url ./ -d docs",
+    "build-github": "rm -rf docs/* && parcel build index.html --public-url ./ --dist-dir docs",
     "serve": "parcel index.html",
     "lint": "eslint src --ext .js"
   },
