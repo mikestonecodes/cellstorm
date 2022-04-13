@@ -1,8 +1,9 @@
 /* eslint-disable immutable/no-mutation */
 
-import potpack from 'potpack';
 
 import { Renderer,Transform,Program,Vec2,Texture} from 'ogl'
+
+import {Texture3D } from '../texture3D';
 
 export const renderer = new Renderer({ dpr: 0.75})
 export const scene = new Transform()
@@ -28,9 +29,35 @@ window.addEventListener('resize', resize, false)
 
 
 
-const images = [ {
-    w:8,
-    h:8,
+const images = [ 
+    
+    {
+        wa:11,
+        data:new Uint8Array([
+        0,0,1,1,1,1,0,0,0,1,1,
+        0,1,0,0,0,0,1,0,0,1,1,
+        1,0,0,0,0,0,0,1,0,1,1,
+        1,0,2,0,0,2,0,1,0,1,1,
+        1,0,0,0,0,0,0,1,0,1,1,
+        1,0,3,3,3,3,0,1,0,1,1,
+        0,1,0,0,0,0,1,0,0,1,1,
+        0,0,1,1,1,1,0,0,0,1,1,
+        0,0,1,1,1,1,0,0,1,1,0,
+        0,0,1,1,1,1,0,0,0,1,1,
+        0,1,0,0,0,0,1,0,0,1,1,
+        1,0,0,0,0,0,0,1,0,1,1,
+        1,0,2,0,0,2,0,1,0,1,1,
+        1,0,0,0,0,0,0,1,0,1,1,
+        1,0,3,3,3,3,0,1,0,1,1,
+        0,1,0,0,0,0,1,0,0,1,1,
+        0,0,1,1,1,1,0,0,0,1,1,
+        0,0,1,1,1,1,0,0,1,1,0
+    ])
+    
+    },
+    {
+   
+    wa:8,
     data:new Uint8Array([
     0,0,1,1,1,1,0,0,
     0,1,0,0,0,0,1,0,
@@ -42,209 +69,49 @@ const images = [ {
     0,0,1,1,1,1,0,0
 ])
 
-},
-{
-    w:8,
-    h:8,
-    data:new Uint8Array([
-    0,0,1,1,1,1,0,0,
-    0,1,0,0,0,0,1,0,
-    1,0,0,0,0,0,0,1,
-    1,0,2,0,0,2,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,3,3,3,3,0,1,
-    0,1,0,0,0,0,1,0,
-    0,0,1,1,1,1,0,0
-])
+}]
 
-},
-{
-    w:8,
-    h:8,
-    data:new Uint8Array([
-    0,0,1,1,1,1,0,0,
-    0,1,0,0,0,0,1,0,
-    1,0,0,0,0,0,0,1,
-    1,0,2,0,0,2,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,3,3,3,3,0,1,
-    0,1,0,0,0,0,1,0,
-    0,0,1,1,1,1,0,0
-])
 
-},
-{
-    w:8,
-    h:8,
-    data:new Uint8Array([
-    0,0,1,1,1,1,0,0,
-    0,1,0,0,0,0,1,0,
-    1,0,0,0,0,0,0,1,
-    1,0,2,0,0,2,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,3,3,3,3,0,1,
-    0,1,0,0,0,0,1,0,
-    0,0,1,1,1,1,0,0
-])
-
-},
-{
-    w:8,
-    h:8,
-    data:new Uint8Array([
-    0,0,1,1,1,1,0,0,
-    0,1,0,0,0,0,1,0,
-    1,0,0,0,0,0,0,1,
-    1,0,2,0,0,2,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,3,3,3,3,0,1,
-    0,1,0,0,0,0,1,0,
-    0,0,1,1,1,1,0,0
-])
-
-},
-{
-    w:8,
-    h:8,
-    data:new Uint8Array([
-    0,0,1,1,1,1,0,0,
-    0,1,0,0,0,0,1,0,
-    1,0,0,0,0,0,0,1,
-    1,0,2,0,0,2,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,3,3,3,3,0,1,
-    0,1,0,0,0,0,1,0,
-    0,0,1,1,1,1,0,0
-])
-
-},
-{
-    w:8,
-    h:8,
-    data:new Uint8Array([
-    0,0,1,1,1,1,0,0,
-    0,1,0,0,0,0,1,0,
-    1,0,0,0,0,0,0,1,
-    1,0,2,0,0,2,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,3,3,3,3,0,1,
-    0,1,0,0,0,0,1,0,
-    0,0,1,1,1,1,0,0
-])
-
-},
-{
-    w:8,
-    h:8,
-    data:new Uint8Array([
-    0,0,1,1,1,1,0,0,
-    0,1,0,0,0,0,1,0,
-    1,0,0,0,0,0,0,1,
-    1,0,2,0,0,2,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,3,3,3,3,0,1,
-    0,1,0,0,0,0,1,0,
-    0,0,1,1,1,1,0,0
-])
-
-},
-{
-    w:8,
-    h:8,
-    data:new Uint8Array([
-    0,0,1,1,1,1,0,0,
-    0,1,0,0,0,0,1,0,
-    1,0,0,0,0,0,0,1,
-    1,0,2,0,0,2,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,3,3,3,3,0,1,
-    0,1,0,0,0,0,1,0,
-    0,0,1,1,1,1,0,0
-])
-
-},
-{
-    w:8,
-    h:8,
-    data:new Uint8Array([
-    0,0,1,1,1,1,0,0,
-    0,1,0,0,0,0,1,0,
-    1,0,0,0,0,0,0,1,
-    1,0,2,0,0,2,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,3,3,3,3,0,1,
-    0,1,0,0,0,0,1,0,
-    0,0,1,1,1,1,0,0
-])
-
-},
-{
-    w:8,
-    h:8,
-    data:new Uint8Array([
-    0,0,1,1,1,1,0,0,
-    0,1,0,0,0,0,1,0,
-    1,0,0,0,0,0,0,1,
-    1,0,2,0,0,2,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,3,3,3,3,0,1,
-    0,1,0,0,0,0,1,0,
-    0,0,1,1,1,1,0,0
-])
-
-},
-{
-    w:8,
-    h:8,
-    data:new Uint8Array([
-    5,5,5,5,5,5,5,5,
-    5,5,5,5,5,5,5,5,
-    5,5,5,5,5,5,5,5,
-    5,5,2,5,5,2,5,5,
-    5,5,5,5,5,5,5,5,
-    5,5,3,3,3,3,5,5,
-    5,5,5,5,5,5,5,5,
-    5,5,5,5,5,5,5,5
-])
-}
-,{
-    w:8,
-    h:13,
-    data:new Uint8Array([
-    6,6,2,6,6,2,6,6,
-    6,6,6,6,6,6,6,6,
-    6,6,3,3,3,3,6,6,
-    6,6,6,6,6,6,6,6,
-    6,6,6,6,6,6,6,6,
-    6,6,6,6,6,6,6,6,
-    6,6,6,6,6,6,6,6,
-    6,6,6,6,6,6,6,6,
-    6,6,2,6,6,2,6,6,
-    6,6,6,6,6,6,6,6,
-    6,6,3,3,3,3,6,6,
-    6,6,6,6,6,6,6,6,
-    6,6,6,6,6,6,6,6
-])
+for (let i = 0; i < 50; i++) {
+    images.push({
+        wa:32,
+        data:new Uint8Array(32 * 32).fill(0).map((a,ind) =>(ind) == (i%(32*32))  ? 0 : 1)
+    })
 }
 
-]
+for(const image of images){
+    image.w = image.h = 32;
+}
 
-const {w:width,h:height} =potpack(images);
+//const {w:width,h:height} =potpack(images);
+//console.log(width,height , Math.sqrt(images.length) * 32);
 
-const c = new Uint8Array(width*height);
 
+const width =   1024 ;
+const height = width;
+
+const cols = Math.floor(width / 32);
+const layers = Math.ceil(images.length / (cols*cols) );
+console.log(cols,layers,width,images.length / (cols*cols));
+
+
+const c = new Uint8Array((width*height) * layers );
+   let indx = 0;
+  
+   
     for(const image of images){
-        console.log(image);
-       for (let y = 0; y < image.h ; y++) {
-            for (let x = 0; x < image.w ; x++) { 
-                        c[x+(y+image.y)*width+image.x] = image.data[x+y*image.w];        
+       for (let y = 0; y < 32 ; y++) {
+            for (let x = 0; x < image.wa ; x++) { 
+                        c[x+(y+(Math.floor(indx/cols ) *32))*width+((indx%cols)*32 ) ] = image.data[x+y*image.wa];    
+                        
             }
-        } 
+        }
+        indx++;    
     }
 
   
 
-const tex = new Texture(gl,{image:c,generateMipmaps:false,format:gl.ALPHA,width,height,magFilter:gl.NEAREST,minFilter:gl.NEAREST})
+const tex = new Texture3D(gl,{target:gl.TEXTURE_2D_ARRAY,image:c,generateMipmaps:false,format:gl.ALPHA,type:gl.UNSIGNED_BYTE,width:width,layers,magFilter:gl.NEAREST,minFilter:gl.NEAREST})
 
 const program = new Program(gl, {
     vertex,

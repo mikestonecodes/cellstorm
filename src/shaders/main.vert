@@ -1,7 +1,6 @@
 #version 300 es
 
 in float uTime;
-
 flat out int vid;
 flat out float rotation;
 
