@@ -19,6 +19,7 @@
     "fps-m": "^1.1.2",
     "maxrects-packer": "^2.7.3",
     "ogl": "^0.0.78",
+    "picogl": "^0.17.9",
     "potpack": "^1.0.2",
     "stats.js": "^0.17.0"
   }

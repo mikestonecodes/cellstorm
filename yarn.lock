@@ -3871,6 +3871,11 @@
   "resolved" "https://registry.npmjs.org/picocolors/-/picocolors-1.0.0.tgz"
   "version" "1.0.0"
 
+"picogl@^0.17.9":
+  "integrity" "sha512-TfqB7jlD5FTO4a/Rp9wnMhVjPA0XZ/xbtLS2f8eHtOmVtIOhFD7Wf0jUL6kDjww3bgF/REEV9oPreBeGvWFlUQ=="
+  "resolved" "https://registry.npmjs.org/picogl/-/picogl-0.17.9.tgz"
+  "version" "0.17.9"
+
 "picomatch@^2.2.3":
   "integrity" "sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA=="
   "resolved" "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz"

@@ -28,7 +28,7 @@ resize()
 window.addEventListener('resize', resize, false)
 
 var stats = new Stats();
-stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+stats.showPanel(0); 
 document.body.appendChild( stats.dom );
 
 
@@ -106,13 +106,15 @@ const c = new Uint8Array((width*height) * layers );
     }
 
   
-
 const tex3D = new Texture3D(gl,{target:gl.TEXTURE_2D_ARRAY,image:c,generateMipmaps:false,format:gl.ALPHA,type:gl.UNSIGNED_BYTE,width:width,layers,magFilter:gl.NEAREST,minFilter:gl.NEAREST})
 
-const numVertices = 50000;
+const numQuads = 4000000;
 const program = new Program(gl, {
     vertex,
-    fragment,
+    fragment, 
+    depthTest:true,
+    transparent:false,
+    cullFace:false,
     uniforms: {
         uTime,   
         zoom,
@@ -121,10 +123,8 @@ const program = new Program(gl, {
         height:{value  :height},
      
         u_image: { value: tex3D },
-        numVerts:{value:numVertices}
-    },
-    transparent: true,
-    depthTest: false
+        numQuads:{value:numQuads}
+    }
 })
 
 if(!gl.getProgramParameter(program.program, gl.LINK_STATUS)){
@@ -137,11 +137,11 @@ function update() {
 
     
     stats.begin();
-
     uTime.value += 0.01;
-    program.use();
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-    gl.drawArrays(gl.POINTS, 0, numVertices);
+    program.use();
+   
+    gl.drawArraysInstanced(gl.TRIANGLES, 0, 6, numQuads)
     stats.end();
 
     requestAnimationFrame(update);
