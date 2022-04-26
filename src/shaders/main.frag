@@ -17,16 +17,7 @@ in vec2 vemu_PointCoord;
 
 #pragma glslify: palette = require('./palette.glsl')
 
-vec2 rotateUV(vec2 uv, float rotation )
-{
-    vec2 mid = vec2(0.5);
-    float cosAngle = cos(rotation);
-    float sinAngle = sin(rotation);
-    return vec2(
-        cosAngle * (uv.x - mid.x) + sinAngle * (uv.y - mid.y) + mid.x,
-        cosAngle * (uv.y - mid.y) - sinAngle * (uv.x - mid.x) + mid.y
-    );
-}
+
 
 void drawTiles(){
     //color = vec4(0.5,0.1,0.3,1.0);

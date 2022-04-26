@@ -107,8 +107,9 @@ const c = new Uint8Array((width*height) * layers );
 
   
 const tex3D = new Texture3D(gl,{target:gl.TEXTURE_2D_ARRAY,image:c,generateMipmaps:false,format:gl.ALPHA,type:gl.UNSIGNED_BYTE,width:width,layers,magFilter:gl.NEAREST,minFilter:gl.NEAREST})
-
-const numQuads = 4000000;
+let params = (new URL(document.location)).searchParams;
+let numparticles = Number(params.get("particles")) || 100000;
+const numQuads =numparticles;
 const program = new Program(gl, {
     vertex,
     fragment, 
