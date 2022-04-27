@@ -5,6 +5,7 @@ uniform float uTime;
 uniform int numQuads;
 uniform highp int width;
 uniform highp int height;
+in float ivid;
 flat out int vid;
 flat out float rotation;
 out vec2 vemu_PointCoord;
@@ -31,11 +32,11 @@ vec2 rotateUV(vec2 uv, float rotation, vec2 mid)
 
 void main() {
 
-  int qID =gl_InstanceID;
+  int qID = numQuads-gl_InstanceID;
   float u = float(qID) / float(numQuads);
-  vid = qID;
-  float size =  5. +(sin(uTime  ) * 10.0);
-    float off = floor(uTime + u) / 1000.0;            // changes once per second per vertex
+  vid = int(ivid);
+  float size =  25. +(sin(uTime  ) * 10.0);
+  float off = floor(uTime + u) / 1000.0;            // changes once per second per vertex
 
   float x = hash(u + off) * 2.0 - 1.0;             // random position
   float y = fract(uTime + u) * -2.0 + 1.0;      // 1.0 ->  -1.0
@@ -45,15 +46,10 @@ void main() {
       (gl_VertexID / 2 + gl_VertexID / 3) % 2);
 
   gl_Position = vec4(   vec2(x,y)  , u,  1.);
-   
-
- 
-    gl_Position.xy += (vec2(unitQuad) - 0.5) * 2.0 * size / vec2(width,height);
-    vec2 rot = rotateUV(gl_Position.xy, rotation,vec2(x,y));
-     gl_Position.xy = rot;
-   
-
-    vemu_PointCoord = vec2(unitQuad.x, 1.0 - float(unitQuad.y));
-    gl_PointSize = size/4.;
+  gl_Position.xy += (vec2(unitQuad) - 0.5) * 2.0 * size / vec2(width,height);
+  vec2 rot = rotateUV(gl_Position.xy, rotation,vec2(x,y));
+  gl_Position.xy = rot;
+  vemu_PointCoord = vec2(unitQuad.x, 1.0 - float(unitQuad.y));
+  
 
 }

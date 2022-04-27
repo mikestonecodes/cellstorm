@@ -1,7 +1,7 @@
 /* eslint-disable immutable/no-mutation */
 
 
-import { Renderer,Transform,Program,Vec2,Texture} from 'ogl'
+import { Renderer,Transform,Program,Vec2,Geometry,Mesh} from 'ogl'
 
 import {Texture3D } from '../texture3D';
 
@@ -11,7 +11,6 @@ export const scene = new Transform()
 import vertex from "../shaders/main.vert"
 import fragment from "../shaders/main.frag"
 import Stats from "stats.js"
-
 const gl = renderer.gl
 document.body.appendChild(gl.canvas)
 gl.clearColor(1, 1, 1, 1);
@@ -63,14 +62,13 @@ const images = [
     
     wa:8,
     data:new Uint8Array([
-    0,0,1,1,1,1,0,0,
-    0,1,0,0,0,0,1,0,
-    1,0,0,0,0,0,0,1,
-    1,0,2,0,0,2,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,3,3,3,3,0,1,
-    0,1,0,0,0,0,1,0,
-    0,0,1,1,1,1,0,0
+    5,5,5,5,5,5,5,5,
+    5,5,5,5,5,5,5,5,
+    5,5,5,5,5,5,5,5,
+    5,5,5,5,5,5,5,5,
+    5,5,5,5,5,5,5,5,
+    5,5,5,5,5,5,5,5,
+    5,5,5,5,5,5,5,5
 ])
 
 }]
@@ -79,7 +77,6 @@ const images = [
 for (let i = 0; i < 10000; i++) {
     images.push({
         wa:32,
-       
         data:new Uint8Array(32 * 32).fill(0).map(() =>Math.floor(Math.random() *7 ))
     })
 }
@@ -93,13 +90,10 @@ const layers = Math.ceil(images.length / (cols*cols) );
 
 const c = new Uint8Array((width*height) * layers );
    let indx = 0;
-  
-   
     for(const image of images){
        for (let y = 0; y < 32 ; y++) {
             for (let x = 0; x < image.wa ; x++) { 
-                        c[x+(y+(Math.floor(indx/cols ) *32))*width+((indx%cols)*32 ) ] = image.data[x+y*image.wa];    
-                        
+                        c[x+(y+(Math.floor(indx/cols ) *32))*width+((indx%cols)*32 ) ] = image.data[x+y*image.wa];                    
             }
         }
         indx++;    
@@ -107,14 +101,15 @@ const c = new Uint8Array((width*height) * layers );
 
   
 const tex3D = new Texture3D(gl,{target:gl.TEXTURE_2D_ARRAY,image:c,generateMipmaps:false,format:gl.ALPHA,type:gl.UNSIGNED_BYTE,width:width,layers,magFilter:gl.NEAREST,minFilter:gl.NEAREST})
-let params = (new URL(document.location)).searchParams;
-let numparticles = Number(params.get("particles")) || 100000;
+const params = (new URL(document.location)).searchParams;
+const numparticles = Number(params.get("particles")) || 100000;
+console.log("yoyo")
 const numQuads =numparticles;
 const program = new Program(gl, {
     vertex,
     fragment, 
     depthTest:true,
-    transparent:false,
+    transparent:true,
     cullFace:false,
     uniforms: {
         uTime,   
@@ -131,17 +126,27 @@ const program = new Program(gl, {
 if(!gl.getProgramParameter(program.program, gl.LINK_STATUS)){
     throw new Error("shader compile error ^^^^^")
 }
+let data = new Float32Array(numparticles);
+
+for (let i = 0; i < numparticles; i++) {
+    data[i]=numparticles-i-1;
+}
+const geometry = new Geometry(gl, {
+    ivid: { data ,instanced:1 },
+});
+geometry.bindAttributes(program);
 
 requestAnimationFrame(update)
-
+gl.depthMask(false);
 function update() {
 
     
     stats.begin();
     uTime.value += 0.01;
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
     program.use();
-   
+    
     gl.drawArraysInstanced(gl.TRIANGLES, 0, 6, numQuads)
     stats.end();
 

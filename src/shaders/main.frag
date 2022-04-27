@@ -20,12 +20,7 @@ in vec2 vemu_PointCoord;
 
 
 void drawTiles(){
-    //color = vec4(0.5,0.1,0.3,1.0);
-    
     vec2    uv = vemu_PointCoord.xy; 
-   // uv = rotateUV(uv , rotation ) ;
-    //uv/=0.5;
-   // uv-=0.5;
     color = vec4(0.5);
     if(uv.x < 0. || uv.x > 0. + 1.|| uv.y < 0. || uv.y > 0. + 1.) {
      //    discard;
@@ -36,9 +31,8 @@ void drawTiles(){
 
     vec2 spriteSize = vec2(32.,32.);
     
-    float spnum = float(vid % 1000);
-    //if(vid % 16 == 0 ) spnum = float(vid);
-
+    float spnum = float(vid );
+  
     float dx = spriteSize.x / float(width);
     float dy = spriteSize.y / float(height);
     
