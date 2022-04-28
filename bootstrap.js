@@ -73,4 +73,4 @@ console.log(data);
 //const data = new Float32Array(numparticles).fill(50);
 
 
-worker.postMessage({ msg: 'updateBuffer', key: "textureId", data });
+worker.postMessage({ msg: 'updateAttribute', key: "textureId", data });

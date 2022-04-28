@@ -23,6 +23,7 @@ const texHeight = texWidth;
 const texCols = Math.floor(texWidth / texSize);
 const layers = 20;
 let textureBitArray = new Uint8Array((texWidth * texHeight) * layers);
+
 self.onmessage = function (ev) {
     if (ev.data.msg === 'offscreen') {
         ev.data.canvas.style = {};
@@ -35,8 +36,8 @@ self.onmessage = function (ev) {
     if(ev.data.msg === 'uploadTextureBatch'){
         uploadTextureBatch(ev.data.images);
     }
-    if(ev.data.msg === 'updateBuffer'){
-        updateBuffer(ev.data.key,ev.data.data);
+    if(ev.data.msg === 'updateAttribute'){
+        updateAttribute(ev.data.key,ev.data.data);
     }
 
 }
@@ -53,11 +54,13 @@ function updateTextureBitArray(image){
 function uploadTextureBatch(images,xOffset=0,yOffset=0,zOffset=0,width=1024,height=1024){ 
     const layers = Math.ceil(images.length / (texCols * texCols));
     images.forEach((image)=>updateTextureBitArray(image));
+
+    //todo only update 
     gl.texSubImage3D(gl.TEXTURE_2D_ARRAY, 0 , xOffset , yOffset , zOffset , width, height,layers, gl.ALPHA, gl.UNSIGNED_BYTE, textureBitArray);
     return textureBitArray;
 }
 
-function updateBuffer(key,data){
+function updateAttribute(key,data){
     geometry.attributes[key].data = data;
     geometry.updateAttribute(geometry.attributes[key]);
 }
@@ -70,13 +73,11 @@ function init(canvas,numparticles = 10000) {
 
     gl.clearColor(1, 1, 1, 1);
 
-
     const tex3D = new Texture3D(gl, { target: gl.TEXTURE_2D_ARRAY, image: new Uint8Array((texWidth * texHeight) * layers) , generateMipmaps: false, format: gl.ALPHA, type: gl.UNSIGNED_BYTE, width: texWidth, layers, magFilter: gl.NEAREST, minFilter: gl.NEAREST })
 
     program = new Program(gl, {
         vertex,
         fragment,
-       
         transparent: true,
         cullFace: false,
         uniforms: {
