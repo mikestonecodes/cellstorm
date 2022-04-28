@@ -5,7 +5,7 @@ uniform float uTime;
 uniform int numQuads;
 uniform highp int width;
 uniform highp int height;
-in float ivid;
+in float textureId;
 flat out int vid;
 flat out float rotation;
 out vec2 vemu_PointCoord;
@@ -34,7 +34,7 @@ void main() {
 
   int qID = numQuads-gl_InstanceID;
   float u = float(qID) / float(numQuads);
-  vid = int(ivid)-1;
+  vid = int(textureId);
   float size =  25. +(sin(uTime  ) * 10.0);
   float off = floor(uTime + u) / 1000.0;            // changes once per second per vertex
 
