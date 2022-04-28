@@ -34,8 +34,8 @@ void main() {
 
   int qID = numQuads-gl_InstanceID;
   float u = float(qID) / float(numQuads);
-  vid = int(ivid);
-  float size =  5. +(sin(uTime  ) * 10.0);
+  vid = int(ivid)-1;
+  float size =  25. +(sin(uTime  ) * 10.0);
   float off = floor(uTime + u) / 1000.0;            // changes once per second per vertex
 
   float x = hash(u + off) * 2.0 - 1.0;             // random position
