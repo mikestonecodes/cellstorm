@@ -98,7 +98,7 @@ function init(canvas,numparticles = 10000) {
     program.use();
 
     geometry = new Geometry(gl, {
-        textureId: { data:new Float32Array(), instanced: 1 },
+        textureId: {size:2, data:new Float32Array(), instanced: 1 },
     });
 
     geometry.bindAttributes(program);

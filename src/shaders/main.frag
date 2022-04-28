@@ -10,7 +10,6 @@ uniform highp int width;
 uniform highp int height;
 
 flat in int vid;
-flat in float rotation;
 out vec4 color;
 
 in vec2 vemu_PointCoord;
@@ -23,7 +22,6 @@ void drawTiles(){
     vec2    uv = vemu_PointCoord.xy; 
     color = vec4(0.5);
     if(uv.x < 0. || uv.x > 0. + 1.|| uv.y < 0. || uv.y > 0. + 1.) {
-     //    discard;
        color = vec4(0.0,0.0,0.0,0.0);
        return;
     }

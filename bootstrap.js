@@ -61,16 +61,18 @@ for (let i = 0; i < 0; i++) {
     images.push({
         wa: 32,
         idx:i+55,
-        data: new Uint8Array(32 * 32).fill(1)//.map(() => Math.floor(Math.random() * 7))
+        data: new Uint8Array(32 * 32).fill(0).map(() => Math.floor(Math.random() * 7))
     })
 }
 
 worker.postMessage({ msg: 'uploadTextureBatch', images });
 
 // 0...numparticles in array
-const data = new Float32Array([...Array(numparticles).keys()]);
-console.log(data);
-//const data = new Float32Array(numparticles).fill(50);
+//const data = new Float32Array([...Array(numparticles).keys()]);
+const textureIds = new Float32Array(numparticles*2).fill(0);
 
+for (let i = 0; i < numparticles; i++) {
+    textureIds.set([50 + (Math.random() > 0.5?0:1),i],i*2)
+}
 
-worker.postMessage({ msg: 'updateAttribute', key: "textureId", data });
+worker.postMessage({ msg: 'updateAttribute', key: "textureId", data:textureIds });
