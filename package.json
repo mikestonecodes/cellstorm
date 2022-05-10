@@ -1,11 +1,14 @@
 {
+ 
   "devDependencies": {
+    "@parcel/optimizer-data-url": "^2.5.0",
     "@parcel/transformer-glsl": "^2.0.1",
+    "@parcel/transformer-inline-string": "^2.5.0",
     "eslint": "^8.5.0",
     "eslint-plugin-immutable": "^1.0.0",
     "eslint-plugin-pure": "purely-functional/eslint-plugin-pure",
     "eslint-plugin-purecheck": "github:lcrespom/eslint-plugin-purecheck",
-    "parcel": "^2.0.1"
+    "parcel": "^2.5.0"
   },
   "scripts": {
     "build": "parcel build index.html",
@@ -22,5 +25,7 @@
     "picogl": "^0.17.9",
     "potpack": "^1.0.2",
     "stats.js": "^0.17.0"
-  }
+  },
+  "type": "module"
+  
 }
