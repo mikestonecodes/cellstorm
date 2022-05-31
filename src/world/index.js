@@ -51,11 +51,11 @@ function updateTextureBitArray(image){
     }
 }
 
-function uploadTextureBatch(images,xOffset=0,yOffset=0,zOffset=0,width=1024,height=1024){ 
+function uploadTextureBatch(images,xOffset=0,yOffset=0,zOffset=0,width=512,height=512){ 
     const layers = Math.ceil(images.length / (texCols * texCols));
     images.forEach((image)=>updateTextureBitArray(image));
 
-    //todo only update 
+
     gl.texSubImage3D(gl.TEXTURE_2D_ARRAY, 0 , xOffset , yOffset , zOffset , width, height,layers, gl.ALPHA, gl.UNSIGNED_BYTE, textureBitArray);
     return textureBitArray;
 }

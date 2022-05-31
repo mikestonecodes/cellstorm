@@ -34,16 +34,15 @@ void main() {
   int qID = numQuads-gl_InstanceID;
   float u = float(qID) / float(numQuads);
   vid = int(textureId[0]);
-  float offset = (textureId[1]);
-
-  float x = offset*0.005;         
-  float y = offset*0.005; 
-  float size =  (sin(uTime) + 3.0) * 10.;
+  float offset = (0.);
+  float off = floor(uTime + u) / 1000.0;
+  float x = hash(u + off) * 2.0 - 1.0;             // random position
+  float y = fract(uTime + u) * -2.0 + 1.0;      // 1.0 ->  -1.0
+  float size =  (sin(uTime) + 1.0) * 5.;
   float rotation = offset*0.02;
   float rotXoffset=uTime;
   float rotYoffset=uTime;
 
-  rotation *= (sin(uTime) + 1.0);
 
   ivec2 unitQuad = ivec2(
       gl_VertexID / 6 + gl_VertexID % 2,
